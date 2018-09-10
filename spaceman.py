@@ -9,33 +9,31 @@ chancesLeft = 7 # number of lives
 arrayOfGuessedLetters = [] # init an array of guessed letters
 displayWord = [] # init an placeholder word that will hold guessed letters and underscores
 
-# SETUP
+def chooseWord():
+    os.system('clear')
+    print(line) # formatting
+    print("\nThis is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess")
+    print(line) # formatting
 
-os.system('clear')
-print(line) # formatting
+    waitingForValidWord = True
 
-print("\nThis is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess")
+    while waitingForValidWord == True:
+        try:
+            global chosenWord
+            chosenWord = str(input("Enter a WORD with more than 2 characters for player 2 to guess: ")).upper()
+        except:
+            print('Unexpected error. Try something else')
 
-print(line) # formatting
+        # if chosenWord == '\x00':
+        if (len(chosenWord) > 0) and chosenWord.isalpha():  # check if input is only a single character and a letter
+            waitingForValidWord = False
+        else:
+            waitingForValidWord = True
 
-waitingForValidWord = True
+    print(line) # formatting
+    os.system('clear')
 
-while waitingForValidWord == True:
-    try:
-        global chosenWord
-        chosenWord = str(input("Enter a WORD with more than 2 characters for player 2 to guess: ")).upper()
-    except:
-        print('Unexpected error. Try something else')
-
-    # if chosenWord == '\x00':
-    if (len(chosenWord) > 0) and chosenWord.isalpha():  # check if input is only a single character and a letter
-        waitingForValidWord = False
-    else:
-        waitingForValidWord = True
-
-print(line) # formatting
-os.system('clear')
-# END SETUP
+chooseWord()
 
 def showGameInstructions():
     # show instructions
