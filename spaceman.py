@@ -7,9 +7,6 @@ line = "\n______________________________________________________________________
 # number of lives
 chancesLeft = 7
 
-# init an array with a list of words
-# arrayOfWords = ["Apple", "Orange", "Banana", "Grapes", "Mango", "Raspberry", "Zebra", "Cheesy"]
-
 os.system('clear')
 chosenWord = input("This is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess: ").upper()
 os.system('clear')
@@ -124,12 +121,3 @@ while playing:
     else:
         # if not guessed correctly keep asking for user input until
         askForUserInput()
-        # print('i think this is working, if not i dont know what to do')
-
-
-
-# def testUserInput():
-
-
-#
-# if chancesLeft = 0: Game Over
