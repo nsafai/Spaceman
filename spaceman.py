@@ -5,34 +5,53 @@ import spacemandrawing
 # cleaning up terminal output with lines
 line = "\n_______________________________________________________________________________________________\n"
 
-# number of lives
-chancesLeft = 7
+chancesLeft = 7 # number of lives
+arrayOfGuessedLetters = [] # init an array of guessed letters
+displayWord = [] # init an placeholder word that will hold guessed letters and underscores
+
+# SETUP
 
 os.system('clear')
 print(line) # formatting
-chosenWord = input("\n\nThis is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess: ").upper()
+
+print("\nThis is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess")
+
+print(line) # formatting
+
+waitingForValidWord = True
+
+while waitingForValidWord == True:
+    try:
+        global chosenWord
+        chosenWord = str(input("Enter a WORD with more than 2 characters for player 2 to guess: ")).upper()
+    except:
+        print('Unexpected error. Try something else')
+
+    # if chosenWord == '\x00':
+    if (len(chosenWord) > 0) and chosenWord.isalpha():  # check if input is only a single character and a letter
+        waitingForValidWord = False
+    else:
+        waitingForValidWord = True
+
 print(line) # formatting
 os.system('clear')
+# END SETUP
 
-# init an array of guessed letters
-arrayOfGuessedLetters = []
+def showGameInstructions():
+    # show instructions
+    print("\nWelcome to Spaceman! A word has been chosen that YOU must guess, one letter at a time.")
+    print("If you guess incorrectly 7 times, you lose and your friend gets launched into space!")
+    print("If you guess all letters correctly, you save your friend from eternal loneliness.\n")
+    print("Alright, let's get started! Here is your word:\n")
 
-# init an placeholder word that will hold guessed letters and underscores
-displayWord = []
+showGameInstructions()
 
-# show instructions
-print("\nWelcome to Spaceman! A word has been chosen that YOU must guess, one letter at a time.")
-print("If you guess incorrectly 7 times, you lose and your friend gets launched into space!")
-print("If you guess all letters correctly, you save your friend from eternal loneliness.\n")
-print("Alright, let's get started! Here is your word:\n")
-
-# show randomly chosen word, except with letters are replaced with underscores
 def hideWord():
     for char in chosenWord:
-        displayWord.append("_ ")
+        displayWord.append("_ ") # replace letters in chosenWord with underscores and store that inside displayWord
 
 hideWord()
-print(''.join(displayWord))
+print(''.join(displayWord)) # show randomly chosen word, except with letters are replaced with underscores
 
 def checkAndPrint(guessedLetter):
     guessedLetter = guessedLetter.upper()
@@ -68,16 +87,17 @@ def checkAndPrint(guessedLetter):
 
 def askForUserInput():
 
-    waitingForInput = True
+    waitingForValidLetter = True
 
-    while waitingForInput == True:
-        textInput = input(str("\nGuess a single letter: "))
+    while waitingForValidLetter:
+        try:
+            letterInput = input(str("\nGuess a single letter: "))
+        except:
+            print('Unexpected error. Try something else')
 
-        if (len(textInput) == 1):  # check if input is only a single character
-            checkAndPrint(textInput)
-            waitingForInput = False
-        else:
-            waitingForInput = True
+        if (len(letterInput) == 1) and letterInput.isalpha():  # check if input is only a single character and a letter
+            checkAndPrint(letterInput)
+            waitingForValidLetter = False
 
 playing = True
 while playing:
