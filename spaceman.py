@@ -1,5 +1,6 @@
 import re
 import os
+import spacemandrawing
 
 # cleaning up terminal output with lines
 line = "\n_______________________________________________________________________________________________\n"
@@ -12,37 +13,6 @@ print(line) # formatting
 chosenWord = input("\n\nThis is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess: ").upper()
 print(line) # formatting
 os.system('clear')
-
-def drawSpaceMan():
-    if chancesLeft != 0:
-        if chancesLeft < 7:
-            print("   .")
-            print("   _")
-            print("  ___")
-            print(" _____")
-        if chancesLeft < 6:
-            print("|  o  | Careful with your guesses")
-        if chancesLeft < 5:
-            print("| \|/ | Seriously")
-        if chancesLeft < 4:
-            print("|  |  | I'm not kidding!")
-        if chancesLeft < 3:
-            print("| / \ | Are you even trying?")
-        if chancesLeft < 2:
-            print(" _____  This is not funny!")
-    else:
-        print("   .")
-        print("   _")
-        print("  ___")
-        print(" _____")
-        print("|  o  |  AAaaahhhh")
-        print("| \|/ |")
-        print("|  |  |")
-        print("| / \ |")
-        print(" _____ ")
-        print(" ^^^^^")
-        print("/ \ / \ ")
-        print("TAKEOFF!\n\n")
 
 # init an array of guessed letters
 arrayOfGuessedLetters = []
@@ -70,43 +40,44 @@ def checkAndPrint(guessedLetter):
     global chancesLeft
     print(line) # formatting
 
-    # check where guessedLetter appears in chosenWord (outputs indices)
+    # check where guessedLetter appears in chosenWord (outputs indices, or, if guess is incorrect, is empty)
     indicesForCorrectGuesses = [m.start() for m in re.finditer(guessedLetter, chosenWord)]
 
-    if indicesForCorrectGuesses == []:
+    if indicesForCorrectGuesses == []: # guessed incorrectly
         print("Noooope, sucks to suck. You lost a life! What else would you like to guess?")
-        # check if already entered that letter
-        chancesLeft -= 1
+        chancesLeft -= 1 # check if already entered that letter
     else:
         # correct guess
         print('Niiiiiice! That letter is indeed in the word :)')
 
-        # add letter inputs to an arrayOfGuessedLetters
-        for i in indicesForCorrectGuesses:
-            displayWord[i] = guessedLetter
+        for i in indicesForCorrectGuesses: # for every correct guess
+            displayWord[i] = guessedLetter # replace underscores with correctly guessed letters
 
     print(line) # formatting
 
-    # show remaining tries
-    print("You have %d chance(s) left\n" % chancesLeft)
+    print("You have %d chance(s) left\n" % chancesLeft) # show remaining tries
 
+    arrayOfGuessedLetters.append(guessedLetter) # add most recent guess to array of all guessed letters
+    print("Guesses so far: " + ' '.join(arrayOfGuessedLetters) + "\n") # print all guesses
 
-    # show all letter inputs so far (if incorrect, follow by ("✗"), else do not)
-    arrayOfGuessedLetters.append(guessedLetter)
-    print("Guesses so far: " + ''.join(arrayOfGuessedLetters) + "\n")
-
-
-    # show progress so far
-    print(' '.join(displayWord))
+    print(' '.join(displayWord)) # show progress so far
 
     print(line) # formatting
-    drawSpaceMan()
 
-    # draw spaceman
+    spacemandrawing.drawSpaceMan(chancesLeft)
 
 def askForUserInput():
-    # ask user for a letter input (v2: only allow one letter at a time)
-    checkAndPrint(input(str("\nGuess a letter: ")))
+
+    waitingForInput = True
+
+    while waitingForInput == True:
+        textInput = input(str("\nGuess a single letter: "))
+
+        if (len(textInput) == 1):  # check if input is only a single character
+            checkAndPrint(textInput)
+            waitingForInput = False
+        else:
+            waitingForInput = True
 
 playing = True
 while playing:
