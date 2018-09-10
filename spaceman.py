@@ -14,6 +14,37 @@ os.system('clear')
 chosenWord = input("This is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess: ").upper()
 os.system('clear')
 
+def drawSpaceMan():
+    if chancesLeft != 0:
+        if chancesLeft < 7:
+            print("   .")
+            print("   _")
+            print("  ___")
+            print(" _____")
+        if chancesLeft < 6:
+            print("|  o  | Careful with your guesses")
+        if chancesLeft < 5:
+            print("| \|/ | Seriously")
+        if chancesLeft < 4:
+            print("|  |  | I'm not kidding!")
+        if chancesLeft < 3:
+            print("| / \ | Are you even trying?")
+        if chancesLeft < 2:
+            print(" _____  This is not funny!")
+    else:
+        print("   .")
+        print("   _")
+        print("  ___")
+        print(" _____")
+        print("|  o  |  AAaaahhhh")
+        print("| \|/ |")
+        print("|  |  |")
+        print("| / \ |")
+        print(" _____ ")
+        print(" ^^^^^")
+        print("/ \ / \ ")
+        print("TAKEOFF!\n\n")
+
 # init an array of guessed letters
 arrayOfGuessedLetters = []
 
@@ -36,9 +67,9 @@ print(''.join(displayWord))
 
 def checkAndPrint(guessedLetter):
     guessedLetter = guessedLetter.upper()
-    os.system('clear')
+    os.system('clear') # clear terminal
     global chancesLeft
-    print(line)
+    print(line) # formatting
 
     # check where guessedLetter appears in chosenWord (outputs indices)
     indicesForCorrectGuesses = [m.start() for m in re.finditer(guessedLetter, chosenWord)]
@@ -55,7 +86,7 @@ def checkAndPrint(guessedLetter):
         for i in indicesForCorrectGuesses:
             displayWord[i] = guessedLetter
 
-    print(line)
+    print(line) # formatting
 
     # show remaining tries
     print("You have %d chance(s) left\n" % chancesLeft)
@@ -68,6 +99,9 @@ def checkAndPrint(guessedLetter):
 
     # show progress so far
     print(' '.join(displayWord))
+
+    print(line) # formatting
+    drawSpaceMan()
 
     # draw spaceman
 
@@ -90,8 +124,11 @@ while playing:
     else:
         # if not guessed correctly keep asking for user input until
         askForUserInput()
+        # print('i think this is working, if not i dont know what to do')
 
 
+
+# def testUserInput():
 
 
 #
