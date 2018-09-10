@@ -8,7 +8,9 @@ line = "\n______________________________________________________________________
 chancesLeft = 7
 
 os.system('clear')
-chosenWord = input("This is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess: ").upper()
+print(line) # formatting
+chosenWord = input("\n\nThis is a two player game.\nFirst, hide the screen from player1.\nWhen that's done, player2 may type in a word you want player1 to guess: ").upper()
+print(line) # formatting
 os.system('clear')
 
 def drawSpaceMan():
